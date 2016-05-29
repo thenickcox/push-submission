@@ -4,7 +4,7 @@ Thanks for your consideration. I've created a solution to your code assessment, 
 
 Thank you again for taking the time to review this submission. I'll look forward to hearing from you soon!
 
-Sincerely,
+Sincerely,<br>
 Nick
 
 
