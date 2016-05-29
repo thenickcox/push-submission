@@ -1,12 +1,10 @@
 const Tasks = class TaskList {
   constructor() {
     this.apiRoot = 'https://push-code-assessment.herokuapp.com/v1/api';
-    this.frag = document.createDocumentFragment();
+    this.renderFragment = document.createDocumentFragment();
   }
 
-  checkStatus(response){
-    // fetch doesn't reject a promise on a 404 or 500 server error;
-    // throw on any non 2xx response.
+  checkResponseStatus(response){
     if (response.status >= 200 && response.status < 300) {
       return response;
     } else {
@@ -28,28 +26,28 @@ const Tasks = class TaskList {
     parentFragment.appendChild(fragment);
   }
 
-  getTasksForUser(user, url, frag) {
-    const userFrag = document.createDocumentFragment();
+  getTasksForUser(user, url, fragment) {
+    const userFragment = document.createDocumentFragment();
     const headline = document.createElement('h3');
     headline.textContent = user.name;
 
     const ul = document.createElement('ul');
     fetch(`${url}/users/${user.id}/tasks`)
-      .then(TaskList.prototype.checkStatus)
+      .then(TaskList.prototype.checkResponseStatus)
       .then(response => response.json())
       .then((tasks) => {
         tasks.forEach((task) => {
           TaskList.prototype.buildTaskHTML(ul, task);
         });
       });
-    return TaskList.prototype.buildUserHTML(headline, ul, userFrag, frag);
+    return TaskList.prototype.buildUserHTML(headline, ul, userFragment, fragment);
   }
 
   render() {
     const apiRoot = this.apiRoot;
-    const fragment = this.frag;
+    const fragment = this.renderFragment;
     fetch(`${apiRoot}/users`)
-      .then(TaskList.prototype.checkStatus)
+      .then(TaskList.prototype.checkResponseStatus)
       .then(response => response.json())
       .then((users) => {
         users.forEach(user => TaskList.prototype.getTasksForUser(user, apiRoot, fragment));
